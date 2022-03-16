@@ -1,12 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Register from './components/auth/Register'
 import Navbar from './components/layout/Navbar'
 
 function Home() {
     return (<div>home</div>)
-}
-function Register() {
-    return (<div>register</div>)
 }
 function Login() {
     return (<div>login</div>)
