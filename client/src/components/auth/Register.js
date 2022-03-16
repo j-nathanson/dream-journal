@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
+import AuthContext from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVerify, setPasswordVerify] = useState('')
+
+    const { getLoggedIn } = useContext(AuthContext)
+    const navigate = useNavigate()
+
 
     const register = async (e) => {
         e.preventDefault()
@@ -14,6 +20,10 @@ export default function Register() {
                 email, password, passwordVerify
             }
             await axios.post("http://localhost:3001/auth/", registerData)
+
+            // update global then navigate to home
+            await getLoggedIn()
+            navigate('/')
         } catch (err) {
             console.log(err)
         }

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
 const cors = require('cors')
+const logger = require('morgan');
 
 
 // read .env at root, set up process.env
@@ -15,6 +16,8 @@ app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`)
 })
 
+// * middleware
+app.use(logger('dev'));
 app.use(express.json())
 app.use(cookieParser())
 
