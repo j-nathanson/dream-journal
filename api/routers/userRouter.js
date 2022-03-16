@@ -133,4 +133,25 @@ router.get('/logout', (req, res) => {
         .send()
 })
 
+//** IS USER LOGGED IN?
+router.get('/loggedIn', (req, res) => {
+    // will return true or false based if a cookies is present and verified
+    //  will send 200 status code regardless
+    try {
+        const { token } = req.cookies
+
+        // no token
+        if (!token) return res.json(false)
+
+        // checking token by using secret, will throw an error if not the same
+        jwt.verify(token, process.env.JWT_SECRET)
+
+        // token verified
+        res.send(true)
+    } catch (err) {
+        // token not verified
+        res.json(false)
+    }
+})
+
 module.exports = router
