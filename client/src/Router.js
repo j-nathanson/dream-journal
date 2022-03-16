@@ -23,7 +23,7 @@ export default function Router() {
                 <Route path='/' element={<Home />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/customer' element={<Customers />} />
+                <Route path='/customers' element={<Customers />} />
             </Routes>
         </BrowserRouter>
     )
