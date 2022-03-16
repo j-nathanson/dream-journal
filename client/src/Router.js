@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/layout/Navbar'
 
 function Home() {
     return (<div>home</div>)
@@ -17,6 +18,7 @@ function Customers() {
 export default function Router() {
     return (
         <BrowserRouter>
+            <Navbar />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/register' element={<Register />} />
