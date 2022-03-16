@@ -8,7 +8,6 @@ export default function Navbar() {
 
     // get global variable
     const { loggedIn } = useContext(AuthContext)
-    console.log(loggedIn)
     return (
         <div>
             <Link to='/'>Home</Link>

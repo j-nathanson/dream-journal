@@ -1,10 +1,16 @@
 import React from 'react'
 
-export default function CustomerList() {
+export default function CustomerList({ customers }) {
+
+    const renderCustomers = () => {
+        return customers.map((customer, i) => {
+            return <li key={i}>{customer.name}</li>
+        })
+    }
     return (
         <div>
             <ul>
-                <li>list here</li>
+                {renderCustomers()}
             </ul>
         </div>
     )

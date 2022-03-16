@@ -18,8 +18,8 @@ export default function Customers() {
     }, [])
     return (
         <div>
-            <CustomerForm />
-            <CustomerList customer={customers} />
+            <CustomerForm getCustomers={getCustomers}/>
+            <CustomerList customers={customers} />
         </div>
     )
 }
