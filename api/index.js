@@ -15,18 +15,14 @@ app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`)
 })
 
-// middleware
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     next();
-// });
 app.use(express.json())
 app.use(cookieParser())
 
-const options = {
-    origin: "http://localhost:3000"
-}
-app.use(cors(options))
+// have browser set cookies from the origin
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}))
 
 // connect to mongoDB
 mongoose.connect(process.env.MDB_CONNECT, {
