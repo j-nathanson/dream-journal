@@ -1,23 +1,23 @@
 const router = require('express').Router()
-const Customer = require('../models/customerModel')
+const Dream = require('../models/dreamModel')
 const auth = require('../middleware/auth')
 
-//* /customer
+//* /journal
 
-// **ADD A CUSTOMER
+// **ADD AN ENTRY TO THE JOURNAL
 router.post('/', auth, async (req, res) => {
     try {
         const { name } = req.body;
 
-        const newCustomer = new Customer({
+        const newDream = new Dream({
             name
         })
 
-        // save new customer in db
-        savedCustomer = await newCustomer.save()
+        // save new Entry in db
+        savedDream = await newDream.save()
 
-        // send back new saved customer obj
-        res.json(savedCustomer)
+        // send back new saved dream-entry obj
+        res.json(savedDream)
     } catch (err) {
         console.log(err)
         // 500 server error
@@ -25,11 +25,11 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-// *GET ALL CUSTOMERS
+// *GET ALL JOURNAL ENTRIES
 router.get('/', auth, async (req, res) => {
     try {
-        const customers = await Customer.find()
-        res.json(customers)
+        const journal = await Dream.find()
+        res.json(journal)
     } catch (err) {
         console.log(err)
         // 500 server error

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Customers from './components/customers/Customers'
+import Journal from './components/journal/Journal'
 import Navbar from './components/layout/Navbar'
 import AuthContext from './context/AuthContext'
 
@@ -26,7 +26,7 @@ export default function Router() {
                     </>}
                 {loggedIn === true &&
                     <>
-                        <Route path='/customers' element={<Customers />} />
+                        <Route path='/journal' element={<Journal />} />
                     </>}
             </Routes>
         </BrowserRouter>

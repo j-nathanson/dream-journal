@@ -19,7 +19,7 @@ export default function Navbar() {
             )}
             {loggedIn === true &&
                 <>
-                    <Link to='/customers'>Customers</Link>
+                    <Link to='/journal'>Journal</Link>
                     <LogOutBtn />
                 </>
 
