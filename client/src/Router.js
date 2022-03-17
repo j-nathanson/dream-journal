@@ -18,11 +18,10 @@ export default function Router() {
         <BrowserRouter>
             <Navbar />
             <Routes>
-                <Route path='/' element={<Home />} />
                 {loggedIn === false &&
                     <>
+                        <Route path='/' element={<Login />} />
                         <Route path='/register' element={<Register />} />
-                        <Route path='/login' element={<Login />} />
                     </>}
                 {loggedIn === true &&
                     <>

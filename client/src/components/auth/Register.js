@@ -23,7 +23,7 @@ export default function Register() {
 
             // update global then navigate to home
             await getLoggedIn()
-            navigate('/')
+            navigate('/journal')
         } catch (err) {
             console.log(err)
         }

@@ -7,11 +7,11 @@ const auth = require('../middleware/auth')
 // **ADD AN ENTRY TO THE JOURNAL
 router.post('/', auth, async (req, res) => {
     try {
-        const { name } = req.body;
+        const { title, date, description } = req.body;
         const userId = req.user
 
         const newDream = new Dream({
-            userId, name
+            userId, title, date, description
         })
 
         // save new Entry in db

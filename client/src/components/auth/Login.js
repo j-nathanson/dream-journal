@@ -22,7 +22,7 @@ export default function Login() {
 
             // update global then navigate to home
             await getLoggedIn()
-            navigate('/')
+            navigate('/journal')
         } catch (err) {
             console.log(err)
         }
