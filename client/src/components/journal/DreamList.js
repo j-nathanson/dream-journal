@@ -30,7 +30,7 @@ const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
     }
     return (
         <div>
-            <h3>{moment(date).format('MMMM Do YYYY')}</h3>
+            <h3>{moment(date).format('dddd, MMMM Do, YYYY')}</h3>
             <form onSubmit={submitEdit}>
                 <ContentEditable
                     html={newTitle} // innerHTML of the editable div

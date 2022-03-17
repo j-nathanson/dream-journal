@@ -1,5 +1,4 @@
 import axios from 'axios'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import DreamForm from './DreamForm'
 import DreamList from './DreamList'
@@ -7,6 +6,7 @@ import DreamList from './DreamList'
 
 export default function Journal() {
     const [journal, setJournal] = useState([])
+    const [filter, setFilter] = useState('all')
 
     // get all customers from db, set local array
     const getJournal = async () => {
@@ -21,19 +21,43 @@ export default function Journal() {
     }
 
     const deleteEntry = async (entryId) => {
-        await axios.delete('http://localhost:3001/journal', { data: { entryId } })
+        const toDelete = { entryId }
+        await axios.delete('http://localhost:3001/journal', { data: toDelete })
         getJournal()
     }
 
+    const handleChange = (e) => {
+        const month = e.target.value
+        setFilter(month)
+    }
 
     useEffect(() => {
         getJournal()
     }, [])
+
     return (
         <div>
             <DreamForm getJournal={getJournal} />
+            <select onChange={handleChange} value={filter}>
+                <option value='all'>All Months</option>
+                <option value='01'>January</option>
+                <option value='02'>February</option>
+                <option value='03'>March</option>
+                <option value='04'>April</option>
+                <option value='05'>May</option>
+                <option value='06'>June</option>
+                <option value='07'>July</option>
+                <option value='08'>August</option>
+                <option value='09'>September</option>
+                <option value='10'>October</option>
+                <option value='11'>November</option>
+                <option value='12'>December</option>
+            </select>
             <DreamList
-                journal={journal}
+                journal={
+                    filter === 'all'
+                        ? journal
+                        : journal.filter(entry => filter === entry.date.slice(5, 7))}
                 updateEntry={updateEntry}
                 deleteEntry={deleteEntry}
             />
