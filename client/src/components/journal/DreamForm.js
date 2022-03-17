@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
 import moment from 'moment'
 
-
 export default function DreamForm({ getJournal }) {
 
     const setDateFunction = (value) => {
@@ -13,11 +12,14 @@ export default function DreamForm({ getJournal }) {
     const [date, setDate] = useState(moment().subtract(1, 'days').format('YYYY-MM-DD'))
     const [description, setDescription] = useState('')
 
-    console.log(date)
     // add an entry to db
     const saveDream = async (e) => {
         e.preventDefault()
-        const dreamData = { title,date,description }
+        const dreamData = {
+            title,
+            date,
+            description
+        }
         try {
             await axios.post('http://localhost:3001/journal', dreamData)
             getJournal(); //make http req to rerender page

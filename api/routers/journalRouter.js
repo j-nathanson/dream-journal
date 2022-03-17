@@ -4,6 +4,21 @@ const auth = require('../middleware/auth')
 
 //* /journal
 
+// *GET ALL JOURNAL ENTRIES
+router.get('/', auth, async (req, res) => {
+    try {
+        // get entries only if they have the same userId
+        const userId = req.user
+        const journal = await Dream.find({ userId: userId })
+
+        res.json(journal)
+    } catch (err) {
+        console.log(err)
+        // 500 server error
+        res.status(500).send();
+    }
+})
+
 // **ADD AN ENTRY TO THE JOURNAL
 router.post('/', auth, async (req, res) => {
     try {
@@ -26,17 +41,16 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-// *GET ALL JOURNAL ENTRIES
-router.get('/', auth, async (req, res) => {
+// ** UPDATE AN ENTRY'S DESCRIPTION
+router.put('/', auth, async (req, res) => {
     try {
-        // get entries only if they have the same userId
-        const userId = req.user
-        const journal = await Dream.find({ userId: userId })
+        const { entryId, newTitle, newDescription } = req.body
 
-        res.json(journal)
+        const entry = await Dream.findByIdAndUpdate(entryId, { title: newTitle, description: newDescription }).exec()
+
+        res.json(entry)
     } catch (err) {
         console.log(err)
-        // 500 server error
         res.status(500).send();
     }
 })
