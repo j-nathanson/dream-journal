@@ -8,9 +8,10 @@ const auth = require('../middleware/auth')
 router.post('/', auth, async (req, res) => {
     try {
         const { name } = req.body;
+        const userId = req.user
 
         const newDream = new Dream({
-            name
+            userId, name
         })
 
         // save new Entry in db
@@ -28,7 +29,10 @@ router.post('/', auth, async (req, res) => {
 // *GET ALL JOURNAL ENTRIES
 router.get('/', auth, async (req, res) => {
     try {
-        const journal = await Dream.find()
+        // get entries only if they have the same userId
+        const userId = req.user
+        const journal = await Dream.find({ userId: userId })
+
         res.json(journal)
     } catch (err) {
         console.log(err)
