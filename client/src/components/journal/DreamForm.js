@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Container, Col, Row } from 'react-bootstrap'
 
 export default function DreamForm({ getJournal }) {
     const [dream, setEntry] = useState('')
@@ -18,13 +19,40 @@ export default function DreamForm({ getJournal }) {
     return (
         <div>
             <form action="" onSubmit={saveDream}>
-                <input
-                    type="text"
-                    placeholder='Dream Log'
-                    onChange={(e) => setEntry(e.target.value)}
-                    value={dream}
-                />
-                <button type="submit">Add Entry to Your Journal</button>
+                <Container className="d-flex flex-column ">
+                    <Row className='text-center my-2'>
+                        <h2>dream log</h2>
+                    </Row>
+                    <Row className='justify-content-around align-items-center mb-3'>
+                        <Col xs={5} className=' d-flex flex-column p-0'>
+                            <label htmlFor="">Title your dream</label>
+                            <input
+                                type="text"
+                                placeholder='weird tree again'
+                                onChange={(e) => setEntry(e.target.value)}
+                                value={dream}
+
+                            />
+                        </Col>
+                        <Col xs={5} className=' d-flex flex-column p-0'>
+                            <label htmlFor="">date</label>
+                            <input type="date" />
+
+                        </Col>
+                    </Row>
+                    <Row className='align-items-center justify-content-center mb-3'>
+
+                        <textarea
+                            id='textarea'
+                            className='col-11'
+                            onChange={(e) => { }} placeholder='describe your dream to the best of your ability'
+                            rows="2"
+                        />
+                    </Row>
+                    <Row className='align-items-center justify-content-center '>
+                        <button className='col-6' type="submit">Add Entry to Your Journal</button>
+                    </Row>
+                </Container>
             </form>
         </div>
     )
