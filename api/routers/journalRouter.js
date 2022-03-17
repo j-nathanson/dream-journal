@@ -41,7 +41,7 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-// ** UPDATE AN ENTRY'S DESCRIPTION
+// ** UPDATE AN ENTRY'S TITLE AND DESCRIPTION
 router.put('/', auth, async (req, res) => {
     try {
         const { entryId, newTitle, newDescription } = req.body
@@ -54,4 +54,18 @@ router.put('/', auth, async (req, res) => {
         res.status(500).send();
     }
 })
+
+// ** DELETE AN ENTRY
+router.delete('/', auth, async (req, res) => {
+    try {
+        const { entryId } = req.body
+        const deleted = await Dream.findByIdAndDelete(entryId)
+
+        res.json(deleted)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send();
+    }
+})
+
 module.exports = router

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import DreamForm from './DreamForm'
 import DreamList from './DreamList'
 
+
 export default function Journal() {
     const [journal, setJournal] = useState([])
 
@@ -18,13 +19,24 @@ export default function Journal() {
         await axios.put('http://localhost:3001/journal', updatedEntry)
         getJournal()
     }
+
+    const deleteEntry = async (entryId) => {
+        await axios.delete('http://localhost:3001/journal', { data: { entryId } })
+        getJournal()
+    }
+
+
     useEffect(() => {
         getJournal()
     }, [])
     return (
         <div>
             <DreamForm getJournal={getJournal} />
-            <DreamList journal={journal} updateEntry={updateEntry} />
+            <DreamList
+                journal={journal}
+                updateEntry={updateEntry}
+                deleteEntry={deleteEntry}
+            />
         </div>
     )
 }

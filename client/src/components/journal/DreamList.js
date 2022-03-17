@@ -1,28 +1,35 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import ContentEditable from 'react-contenteditable'
+import { Button, Modal } from 'react-bootstrap'
 
 
-const Entry = ({ _id, date, title, description, updateEntry }) => {
-
-    const setToggleFunction = (e) => {
-        setToggle(!toggle)
-        e.preventDefault()
-    }
+const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
 
     const [toggle, setToggle] = useState(true)
-
+    // same as properties in object for updateEntry
     const [newTitle, setNewTitle] = useState(title)
     const [newDescription, setNewDescription] = useState(description)
 
+    // modal state
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(!show);
+
+    // Update an entry
     const submitEdit = (e) => {
         e.preventDefault()
         updateEntry(_id, newTitle, newDescription)
         setToggle(!toggle)
 
     }
+
+    const handleDelete = () => {
+        handleShow()
+        console.log(_id)
+        deleteEntry(_id)
+    }
     return (
-        <div className='border'>
+        <div>
             <h3>{moment(date).format('MMMM Do YYYY')}</h3>
             <form onSubmit={submitEdit}>
                 <ContentEditable
@@ -37,19 +44,39 @@ const Entry = ({ _id, date, title, description, updateEntry }) => {
                     onChange={(e) => setNewDescription(e.target.value)}
                     tagName='p'
                 />
-                {toggle && <button onClick={setToggleFunction}>edit</button>}
+                {toggle && (
+                    <div>
+                        <Button varant='info' onClick={() => setToggle(!toggle)}>edit</Button>
+                        <Button variant='danger' onClick={() => handleShow()}>delete</Button>
+                    </div>
+                )}
                 {!toggle && (
-                    <>
+                    <div>
                         <button onClick={() => setToggle(!toggle)}>cancel</button>
                         <button type='submit'>submit</button>
-                    </>
+                    </div>
                 )}
             </form>
+
+            <Modal show={show} onHide={handleShow}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Warning</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete the dream entry: "{newTitle}"?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleShow}>
+                        Close
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                        Delete Dream
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
 
-export default function DreamList({ journal, updateEntry }) {
+export default function DreamList({ journal, updateEntry, deleteEntry }) {
     const renderJournal = () => {
         return journal.map((entry, i) => {
             const { _id, title, date, description } = entry
@@ -61,6 +88,7 @@ export default function DreamList({ journal, updateEntry }) {
                     date={date}
                     description={description}
                     updateEntry={updateEntry}
+                    deleteEntry={deleteEntry}
                 />
             )
 
