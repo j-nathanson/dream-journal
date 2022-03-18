@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Form } from 'react-bootstrap'
 import DreamForm from './DreamForm'
 import DreamList from './DreamList'
 
@@ -36,10 +36,10 @@ export default function Journal() {
     }, [])
 
     return (
-        <Container fluid className='journal-container'>
+        <Container fluid className='journal-container pt-4'>
             <DreamForm getJournal={getJournal} />
             <Container>
-                <select onChange={handleChange} value={filter} className='text-dark'>
+                <Form.Select onChange={handleChange} value={filter} className='text-dark'>
                     <option value='all'>All Months</option>
                     <option value='01'>January</option>
                     <option value='02'>February</option>
@@ -53,7 +53,7 @@ export default function Journal() {
                     <option value='10'>October</option>
                     <option value='11'>November</option>
                     <option value='12'>December</option>
-                </select>
+                </Form.Select>
             </Container>
             <DreamList
                 journal={
