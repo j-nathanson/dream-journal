@@ -80,7 +80,6 @@ export default function DreamForm({ getJournal }) {
                                 initialRating={rating}
                                 value={rating}
                                 onClick={num => setRating(num)}
-
                             />
                         </Col>
                     </Row>

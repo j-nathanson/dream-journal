@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import ContentEditable from 'react-contenteditable'
 import { Button, Container, Modal } from 'react-bootstrap'
+import Rating from 'react-rating'
+import Icon from '@mdi/react'
+import { mdiBrightness2 } from '@mdi/js'
 
 
-const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
+const Entry = ({ _id, date, title, rating, description, updateEntry, deleteEntry }) => {
 
     const [toggle, setToggle] = useState(true)
     // same as properties in object for updateEntry
@@ -38,6 +41,23 @@ const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
                     onChange={(e) => setNewTitle(e.target.value)} // handle innerHTML change
                     tagName='h5'
                 />
+                <Rating
+                    id="rating"
+                    emptySymbol={
+                        <Icon path={mdiBrightness2}
+                            size={.8}
+                            color="white"
+                        />}
+                    fullSymbol={
+                        <Icon
+                            path={mdiBrightness2}
+                            size={.8}
+                            color="gold"
+                        />}
+                    fractions={2}
+                    readonly={true}
+                    initialRating={rating}
+                />
                 <ContentEditable
                     html={newDescription}
                     disabled={toggle}
@@ -60,9 +80,9 @@ const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
 
             <Modal show={show} onHide={handleShow}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Warning</Modal.Title>
+                    <Modal.Title className='text-danger'>Warning</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to delete the dream entry: "{newTitle}"?</Modal.Body>
+                <Modal.Body>Are you sure you want to delete the dream: " <strong>{newTitle}"</strong>?</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleShow}>
                         Close
@@ -79,12 +99,13 @@ const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
 export default function DreamList({ journal, updateEntry, deleteEntry }) {
     const renderJournal = () => {
         return journal.map((entry, i) => {
-            const { _id, title, date, description } = entry
+            const { _id, title, rating, date, description } = entry
             return (
                 <Entry
                     key={i}
                     _id={_id}
                     title={title}
+                    rating={rating}
                     date={date}
                     description={description}
                     updateEntry={updateEntry}
