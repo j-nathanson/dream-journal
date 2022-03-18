@@ -1,0 +1,12 @@
+@import 'fonts';
+@import 'colors';
+
+.login-container {
+    height: 100vh;
+    background: $primary;
+}
+
+*{
+     font-family: 'Epilogue', sans-serif; 
+     color: white;
+}
