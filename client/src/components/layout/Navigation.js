@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
 import { Nav, Navbar } from 'react-bootstrap'
 import AuthContext from '../../context/AuthContext'
 import LogOutBtn from '../auth/LogOutBtn'

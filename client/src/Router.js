@@ -6,13 +6,7 @@ import Journal from './components/journal/Journal'
 import Navigation from './components/layout/Navigation'
 import AuthContext from './context/AuthContext'
 
-function Home() {
-    return (<div>home</div>)
-}
-
-
 export default function Router() {
-
     const { loggedIn } = useContext(AuthContext)
     return (
         <BrowserRouter>

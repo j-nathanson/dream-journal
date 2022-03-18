@@ -103,7 +103,7 @@ export default function DreamForm({ getJournal }) {
                 </Row>
                 <Row className='justify-content-center mb-4'>
                     <Col xs={7} md={6}>
-                        <FormLabel className=''>Add or create a tag for your dream</FormLabel>
+                        <FormLabel className=''>Add a tag for your dream</FormLabel>
                     </Col>
                     <Col xs={5} className=' p-0'>
                         <Form.Group>
