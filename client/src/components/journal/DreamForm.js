@@ -16,7 +16,6 @@ export default function DreamForm({ getJournal }) {
     const [rating, setRating] = useState(3)
     const [tag, setTag] = useState('normal')
     const [description, setDescription] = useState('')
-    console.log(tag)
 
     // add an entry to db
     const saveDream = async (e) => {
@@ -25,7 +24,8 @@ export default function DreamForm({ getJournal }) {
             title,
             date,
             rating,
-            description
+            description,
+            tag
         }
         try {
             await axios.post('http://localhost:3001/journal', dreamData)

@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import ContentEditable from 'react-contenteditable'
-import { Button, Container, Modal } from 'react-bootstrap'
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
 import Rating from 'react-rating'
 import Icon from '@mdi/react'
-import { mdiBrightness2 } from '@mdi/js'
+import { mdiBrightness2, mdiCancel, mdiPlaylistCheck, mdiLeadPencil, mdiTrashCanOutline } from '@mdi/js'
 
 
-const Entry = ({ _id, date, title, rating, description, updateEntry, deleteEntry }) => {
 
+const Entry = ({ entry, updateEntry, deleteEntry }) => {
+
+    const { _id, title, rating, date, description, tag } = entry
     const [toggle, setToggle] = useState(true)
     // same as properties in object for updateEntry
     const [newTitle, setNewTitle] = useState(title)
@@ -33,49 +35,88 @@ const Entry = ({ _id, date, title, rating, description, updateEntry, deleteEntry
     }
     return (
         <Container className='p-3'>
-            <h3>{moment(date).format('dddd, MMMM Do, YYYY')}</h3>
+            <Row className='mb-4'>
+                <Col xs={7}>
+                    <h2>{moment(date).format('dddd, MMMM Do, YYYY')}</h2>
+                </Col>
+                <Col className='p-0 d-flex justify-content-end align-items-start'>
+                    {toggle && (
+                        <div>
+                            <Button variant='success' onClick={() => setToggle(!toggle)} className='p-2'>
+                                <Icon path={mdiLeadPencil}
+                                    size={.8}
+                                    color="white"
+                                    title='edit'
+
+                                />
+                                edit
+                            </Button>
+                            <Button variant='danger' className='p-2' onClick={() => handleShow()}>
+                                <Icon path={mdiTrashCanOutline}
+                                    size={.8}
+                                    color="white"
+                                />
+                                delete
+                            </Button>
+                        </div>
+                    )}
+                    {!toggle && (
+                        <div>
+                            <Button variant='warning' onClick={() => setToggle(!toggle)} className='p-2'>
+                                <Icon path={mdiCancel}
+                                    size={.8}
+                                    color="black"
+                                />
+                                cancel
+                            </Button>
+                            <Button type='submit' variant='info' className='p-2'>
+                                <Icon path={mdiPlaylistCheck}
+                                    size={.8}
+                                    color="black"
+                                />
+                                submit
+                            </Button>
+                        </div>
+                    )}
+                </Col>
+            </Row>
             <form onSubmit={submitEdit}>
-                <ContentEditable
-                    html={newTitle} // innerHTML of the editable div
-                    disabled={toggle}  // use true to disable editing     
-                    onChange={(e) => setNewTitle(e.target.value)} // handle innerHTML change
-                    tagName='h5'
-                />
-                <Rating
-                    id="rating"
-                    emptySymbol={
-                        <Icon path={mdiBrightness2}
-                            size={.8}
-                            color="white"
-                        />}
-                    fullSymbol={
-                        <Icon
-                            path={mdiBrightness2}
-                            size={.8}
-                            color="gold"
-                        />}
-                    fractions={2}
-                    readonly={true}
-                    initialRating={rating}
-                />
+                <Row className='mb-4'>
+                    <Col xs={8}>
+                        <ContentEditable
+                            html={newTitle} // innerHTML of the editable div
+                            disabled={toggle}  // use true to disable editing     
+                            onChange={(e) => setNewTitle(e.target.value)} // handle innerHTML change
+                            tagName='h3'
+                        />
+                    </Col>
+                    <Col>
+                        <Rating
+                            id="rating"
+                            emptySymbol={
+                                <Icon path={mdiBrightness2}
+                                    size={.8}
+                                    color="white"
+                                />}
+                            fullSymbol={
+                                <Icon
+                                    path={mdiBrightness2}
+                                    size={.8}
+                                    color="gold"
+                                />}
+                            fractions={2}
+                            readonly={true}
+                            initialRating={rating}
+                        />
+                    </Col>
+                </Row>
                 <ContentEditable
                     html={newDescription}
                     disabled={toggle}
                     onChange={(e) => setNewDescription(e.target.value)}
                     tagName='p'
                 />
-                {toggle && (
-                    <div>
-                        <Button varant='info' onClick={() => setToggle(!toggle)}>edit</Button>
-                        <Button variant='danger' onClick={() => handleShow()}>delete</Button>
-                    </div>
-                )}
-                {!toggle && (
-                    <div>
-                        <button onClick={() => setToggle(!toggle)}>cancel</button>
-                        <button type='submit'>submit</button>
-                    </div>
-                )}
+                <p>Tag: {tag}</p>
             </form>
 
             <Modal show={show} onHide={handleShow}>
@@ -99,15 +140,10 @@ const Entry = ({ _id, date, title, rating, description, updateEntry, deleteEntry
 export default function DreamList({ journal, updateEntry, deleteEntry }) {
     const renderJournal = () => {
         return journal.map((entry, i) => {
-            const { _id, title, rating, date, description } = entry
             return (
                 <Entry
                     key={i}
-                    _id={_id}
-                    title={title}
-                    rating={rating}
-                    date={date}
-                    description={description}
+                    entry={entry}
                     updateEntry={updateEntry}
                     deleteEntry={deleteEntry}
                 />
@@ -121,3 +157,9 @@ export default function DreamList({ journal, updateEntry, deleteEntry }) {
         </div>
     )
 }
+
+// _id={_id}
+// title={title}
+// rating={rating}
+// date={date}
+// description={description}

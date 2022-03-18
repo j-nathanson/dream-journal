@@ -22,11 +22,11 @@ router.get('/', auth, async (req, res) => {
 // **ADD AN ENTRY TO THE JOURNAL
 router.post('/', auth, async (req, res) => {
     try {
-        const { title, date, rating, description } = req.body;
+        const { title, date, rating, description,tag } = req.body;
         const userId = req.user
 
         const newDream = new Dream({
-            userId, title, date, rating, description
+            userId, title, date, rating, description,tag
         })
 
         // save new Entry in db
