@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useContext } from 'react'
+import { Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 
@@ -17,6 +18,6 @@ export default function LogOutBtn() {
     }
 
     return (
-        <button onClick={logOut}>Log out</button>
+        <Button onClick={logOut}>Log out</Button>
     )
 }

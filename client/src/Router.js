@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Journal from './components/journal/Journal'
-import Navbar from './components/layout/Navbar'
+import Navigation from './components/layout/Navigation'
 import AuthContext from './context/AuthContext'
 
 function Home() {
@@ -16,7 +16,7 @@ export default function Router() {
     const { loggedIn } = useContext(AuthContext)
     return (
         <BrowserRouter>
-            <Navbar />
+            <Navigation />
             <Routes>
                 {loggedIn === false &&
                     <>
