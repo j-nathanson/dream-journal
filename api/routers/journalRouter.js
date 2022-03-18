@@ -22,11 +22,11 @@ router.get('/', auth, async (req, res) => {
 // **ADD AN ENTRY TO THE JOURNAL
 router.post('/', auth, async (req, res) => {
     try {
-        const { title, date, rating, description,tag } = req.body;
+        const { title, date, rating, description, tag } = req.body;
         const userId = req.user
 
         const newDream = new Dream({
-            userId, title, date, rating, description,tag
+            userId, title, date, rating, description, tag
         })
 
         // save new Entry in db
@@ -44,10 +44,15 @@ router.post('/', auth, async (req, res) => {
 // ** UPDATE AN ENTRY'S TITLE AND DESCRIPTION
 router.put('/', auth, async (req, res) => {
     try {
-        const { entryId, newTitle, newDescription } = req.body
+        const { entryId, newTitle, newDescription, newRating, newTag } = req.body
 
-        const entry = await Dream.findByIdAndUpdate(entryId, { title: newTitle, description: newDescription }).exec()
-
+        const entry = await Dream.findByIdAndUpdate(entryId, {
+            title: newTitle,
+            description: newDescription,
+            rating: newRating,
+            tag: newTag
+        },{ new: true })
+            .exec()
         res.json(entry)
     } catch (err) {
         console.log(err)

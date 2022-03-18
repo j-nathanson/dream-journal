@@ -15,6 +15,8 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
     // same as properties in object for updateEntry
     const [newTitle, setNewTitle] = useState(title)
     const [newDescription, setNewDescription] = useState(description)
+    const [newRating, setNewRating] = useState(rating)
+    const [newTag, setNewTag] = useState(tag)
 
     // modal state
     const [show, setShow] = useState(false);
@@ -23,14 +25,13 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
     // Update an entry
     const submitEdit = (e) => {
         e.preventDefault()
-        updateEntry(_id, newTitle, newDescription)
+        updateEntry(_id, newTitle, newDescription, newRating, newTag)
         setToggle(!toggle)
 
     }
 
     const handleDelete = () => {
         handleShow()
-        console.log(_id)
         deleteEntry(_id)
     }
     return (
@@ -105,8 +106,9 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                                     color="gold"
                                 />}
                             fractions={2}
-                            readonly={true}
-                            initialRating={rating}
+                            readonly={toggle}
+                            initialRating={newRating}
+                            onClick={num => setNewRating(num)}
                         />
                     </Col>
                 </Row>
@@ -116,7 +118,25 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                     onChange={(e) => setNewDescription(e.target.value)}
                     tagName='p'
                 />
-                <p>Tag: {tag}</p>
+                {toggle && (<p>Tag: {tag}</p>)}
+
+                {!toggle && (
+                    <Form.Group>
+                        <Form.Select
+                            id="dreamTags"
+                            value={newTag}
+                            onChange={e => setNewTag(e.target.value)}
+                            className='text-muted'
+                        >
+                            <option value='normal'>normal</option>
+                            <option value='daydream'>daydream</option>
+                            <option value='false-awakening'>false-awakening</option>
+                            <option value='lucid dream'>lucid dream</option>
+                            <option value='nightmare'>nightmare</option>
+                            <option value='vivid'>vivid</option>
+                        </Form.Select>
+                    </Form.Group>
+                )}
             </Form>
 
             <Modal show={show} onHide={handleShow}>

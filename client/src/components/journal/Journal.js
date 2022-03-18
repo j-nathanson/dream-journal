@@ -14,8 +14,8 @@ export default function Journal() {
         setJournal(journalRes.data)
     }
 
-    const updateEntry = async (entryId, newTitle, newDescription) => {
-        const updatedEntry = { entryId, newTitle, newDescription }
+    const updateEntry = async (entryId, newTitle, newDescription, newRating, newTag) => {
+        const updatedEntry = { entryId, newTitle, newDescription, newRating, newTag }
         await axios.put('http://localhost:3001/journal', updatedEntry)
         getJournal()
     }
