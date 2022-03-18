@@ -13,6 +13,10 @@ const dreamSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    rating: {
+        type: Number,
+
+    },
     description: {
         type: String,
         required: true

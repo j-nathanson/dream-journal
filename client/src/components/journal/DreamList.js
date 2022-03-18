@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import ContentEditable from 'react-contenteditable'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Container, Modal } from 'react-bootstrap'
 
 
 const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
@@ -29,7 +29,7 @@ const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
         deleteEntry(_id)
     }
     return (
-        <div>
+        <Container className='p-3'>
             <h3>{moment(date).format('dddd, MMMM Do, YYYY')}</h3>
             <form onSubmit={submitEdit}>
                 <ContentEditable
@@ -72,7 +72,7 @@ const Entry = ({ _id, date, title, description, updateEntry, deleteEntry }) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </Container>
     )
 }
 

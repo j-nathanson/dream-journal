@@ -1,8 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Container } from 'react-bootstrap'
 import DreamForm from './DreamForm'
 import DreamList from './DreamList'
-
 
 export default function Journal() {
     const [journal, setJournal] = useState([])
@@ -36,23 +36,25 @@ export default function Journal() {
     }, [])
 
     return (
-        <div>
+        <Container fluid className='journal-container'>
             <DreamForm getJournal={getJournal} />
-            <select onChange={handleChange} value={filter}>
-                <option value='all'>All Months</option>
-                <option value='01'>January</option>
-                <option value='02'>February</option>
-                <option value='03'>March</option>
-                <option value='04'>April</option>
-                <option value='05'>May</option>
-                <option value='06'>June</option>
-                <option value='07'>July</option>
-                <option value='08'>August</option>
-                <option value='09'>September</option>
-                <option value='10'>October</option>
-                <option value='11'>November</option>
-                <option value='12'>December</option>
-            </select>
+            <Container>
+                <select onChange={handleChange} value={filter} className='text-dark'>
+                    <option value='all'>All Months</option>
+                    <option value='01'>January</option>
+                    <option value='02'>February</option>
+                    <option value='03'>March</option>
+                    <option value='04'>April</option>
+                    <option value='05'>May</option>
+                    <option value='06'>June</option>
+                    <option value='07'>July</option>
+                    <option value='08'>August</option>
+                    <option value='09'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                </select>
+            </Container>
             <DreamList
                 journal={
                     filter === 'all'
@@ -61,7 +63,7 @@ export default function Journal() {
                 updateEntry={updateEntry}
                 deleteEntry={deleteEntry}
             />
-        </div>
+        </Container>
     )
 }
 

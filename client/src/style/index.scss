@@ -1,12 +1,25 @@
 @import 'fonts';
 @import 'colors';
 
-.login-container {
-    height: 100vh;
-    background: $primary;
-}
-
 * {
     font-family: 'Epilogue', sans-serif;
+    color:white
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
     color: white;
+}
+
+.login-container {
+    height: 100vh;
+    background: rgb(170, 134, 243);
+}
+
+.journal-container {
+    background: rgb(170, 134, 243);
 }
