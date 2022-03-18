@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import ContentEditable from 'react-contenteditable'
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap'
 import Rating from 'react-rating'
 import Icon from '@mdi/react'
 import { mdiBrightness2, mdiCancel, mdiPlaylistCheck, mdiLeadPencil, mdiTrashCanOutline } from '@mdi/js'
@@ -35,52 +35,52 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
     }
     return (
         <Container className='p-3'>
-            <Row className='mb-4'>
-                <Col xs={7}>
-                    <h2>{moment(date).format('dddd, MMMM Do, YYYY')}</h2>
-                </Col>
-                <Col className='p-0 d-flex justify-content-end align-items-start'>
-                    {toggle && (
-                        <div>
-                            <Button variant='success' onClick={() => setToggle(!toggle)} className='p-2'>
-                                <Icon path={mdiLeadPencil}
-                                    size={.8}
-                                    color="white"
-                                    title='edit'
+            <Form onSubmit={submitEdit}>
+                <Row className='mb-4'>
+                    <Col xs={7}>
+                        <h2>{moment(date).format('dddd, MMMM Do, YYYY')}</h2>
+                    </Col>
+                    <Col className='p-0 d-flex justify-content-end align-items-start'>
+                        {toggle && (
+                            <div>
+                                <Button variant='success' onClick={() => setToggle(!toggle)} className='p-2'>
+                                    <Icon path={mdiLeadPencil}
+                                        size={.8}
+                                        color="white"
+                                        title='edit'
 
-                                />
-                                edit
-                            </Button>
-                            <Button variant='danger' className='p-2' onClick={() => handleShow()}>
-                                <Icon path={mdiTrashCanOutline}
-                                    size={.8}
-                                    color="white"
-                                />
-                                delete
-                            </Button>
-                        </div>
-                    )}
-                    {!toggle && (
-                        <div>
-                            <Button variant='warning' onClick={() => setToggle(!toggle)} className='p-2'>
-                                <Icon path={mdiCancel}
-                                    size={.8}
-                                    color="black"
-                                />
-                                cancel
-                            </Button>
-                            <Button type='submit' variant='info' className='p-2'>
-                                <Icon path={mdiPlaylistCheck}
-                                    size={.8}
-                                    color="black"
-                                />
-                                submit
-                            </Button>
-                        </div>
-                    )}
-                </Col>
-            </Row>
-            <form onSubmit={submitEdit}>
+                                    />
+                                    edit
+                                </Button>
+                                <Button variant='danger' className='p-2' onClick={() => handleShow()}>
+                                    <Icon path={mdiTrashCanOutline}
+                                        size={.8}
+                                        color="white"
+                                    />
+                                    delete
+                                </Button>
+                            </div>
+                        )}
+                        {!toggle && (
+                            <div>
+                                <Button variant='warning' onClick={() => setToggle(!toggle)} className='p-2'>
+                                    <Icon path={mdiCancel}
+                                        size={.8}
+                                        color="black"
+                                    />
+                                    cancel
+                                </Button>
+                                <Button type='submit' variant='info' className='p-2'>
+                                    <Icon path={mdiPlaylistCheck}
+                                        size={.8}
+                                        color="black"
+                                    />
+                                    submit
+                                </Button>
+                            </div>
+                        )}
+                    </Col>
+                </Row>
                 <Row className='mb-4'>
                     <Col xs={8}>
                         <ContentEditable
@@ -90,7 +90,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                             tagName='h3'
                         />
                     </Col>
-                    <Col>
+                    <Col className='d-flex justify-content-end'>
                         <Rating
                             id="rating"
                             emptySymbol={
@@ -117,7 +117,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                     tagName='p'
                 />
                 <p>Tag: {tag}</p>
-            </form>
+            </Form>
 
             <Modal show={show} onHide={handleShow}>
                 <Modal.Header closeButton>

@@ -38,7 +38,7 @@ export default function Journal() {
     return (
         <Container fluid className='journal-container pt-4'>
             <DreamForm getJournal={getJournal} />
-            <Container>
+            <Container className='my-5'>
                 <Form.Select onChange={handleChange} value={filter} className='text-dark'>
                     <option value='all'>All Months</option>
                     <option value='01'>January</option>
