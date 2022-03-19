@@ -35,7 +35,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
         deleteEntry(_id)
     }
     return (
-        <Container className='p-3'>
+        <Container className='p-4 mb-4  entry-container'>
             <Form onSubmit={submitEdit}>
                 <Row className='mb-4'>
                     <Col xs={7}>
@@ -139,11 +139,15 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                 )}
             </Form>
 
-            <Modal show={show} onHide={handleShow}>
+            <Modal show={show} onHide={handleShow} centered>
                 <Modal.Header closeButton>
                     <Modal.Title className='text-danger'>Warning</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to delete the dream: " <strong>{newTitle}"</strong>?</Modal.Body>
+                <Modal.Body className='text-center'>
+                    Are you sure you want to delete the dream:
+                    <br /><br />
+                    <strong><h1 className='text-black'>"{newTitle}"?</h1></strong>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleShow}>
                         Close
@@ -177,9 +181,3 @@ export default function DreamList({ journal, updateEntry, deleteEntry }) {
         </div>
     )
 }
-
-// _id={_id}
-// title={title}
-// rating={rating}
-// date={date}
-// description={description}

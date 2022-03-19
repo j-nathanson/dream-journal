@@ -46,12 +46,14 @@ router.put('/', auth, async (req, res) => {
     try {
         const { entryId, newTitle, newDescription, newRating, newTag } = req.body
 
-        const entry = await Dream.findByIdAndUpdate(entryId, {
-            title: newTitle,
-            description: newDescription,
-            rating: newRating,
-            tag: newTag
-        },{ new: true })
+        const entry = await Dream.findByIdAndUpdate(entryId,
+            {
+                title: newTitle,
+                description: newDescription,
+                rating: newRating,
+                tag: newTag
+            },
+            { new: true })
             .exec()
         res.json(entry)
     } catch (err) {

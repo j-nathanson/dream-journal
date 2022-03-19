@@ -36,7 +36,7 @@ export default function Journal() {
     }, [])
 
     return (
-        <Container fluid className='journal-container pt-4'>
+        <div className='journal-container pt-4'>
             <DreamForm getJournal={getJournal} />
             <Container className='my-5'>
                 <Form.Select onChange={handleChange} value={filter} className='text-dark'>
@@ -63,7 +63,7 @@ export default function Journal() {
                 updateEntry={updateEntry}
                 deleteEntry={deleteEntry}
             />
-        </Container>
+        </div>
     )
 }
 
