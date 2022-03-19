@@ -162,6 +162,14 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
 }
 
 export default function DreamList({ journal, updateEntry, deleteEntry }) {
+
+    if (journal.length === 0) {
+        console.log('empty')
+        return (
+            <div className='empty-fill-div' />
+        )
+    }
+
     const renderJournal = () => {
         return journal.map((entry, i) => {
             return (
@@ -172,11 +180,10 @@ export default function DreamList({ journal, updateEntry, deleteEntry }) {
                     deleteEntry={deleteEntry}
                 />
             )
-
         })
     }
     return (
-        <div>
+        <div className='w-100 pb-3'>
             {renderJournal().reverse()}
         </div>
     )

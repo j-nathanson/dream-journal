@@ -11,7 +11,7 @@ export default function Router() {
     return (
         <BrowserRouter>
             <Navigation />
-            <Routes>
+            <Routes className='h-100'>
                 {loggedIn === false &&
                     <>
                         <Route path='/' element={<Login />} />
