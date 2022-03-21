@@ -2,7 +2,8 @@ const router = require('express').Router()
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
+const passport = require('passport')
+const authenticate = require('../middleware/auth')
 //* auth/
 
 //** REGISTER
@@ -74,6 +75,43 @@ router.post('/', async (req, res) => {
     }
 })
 
+//** REGISTER2
+// POST allows new user to register on website
+router.post('/signup', async (req, res) => {
+    try {
+        if (!req.body.name) {
+            return res
+                .status(400)
+                .json({ errorMessage: "Please enter all fields." })
+        }
+        await User.register(
+            new User({ email: req.body.email, name: req.body.name })
+            , req.body.password,
+            async (err, user) => {
+                if (err) {
+                    return res
+                        .status(500)
+                        .setHeader('Content-Type', 'application/json')
+                        .json({ err: err });
+                }
+                // save in db
+                await user.save()
+                // no error, tell passport to use the local strategy and after send back successful message
+                passport.authenticate('local')(req, res, () => {
+                    return res
+                        .status(200)
+                        .setHeader('Content-Type', 'application/json')
+                        .json({ success: true, status: 'Registration Successful!' });
+                });
+            })
+    } catch (err) {
+        return res
+            .status(500)
+            .setHeader('Content-Type', 'application/json')
+            .json({ err: err })
+    }
+})
+
 //**LOGIN
 router.post("/login", async (req, res) => {
     try {
@@ -121,6 +159,15 @@ router.post("/login", async (req, res) => {
         res.status(500).send();
     }
 })
+
+// *LOGIN 2
+router.post('/login2', passport.authenticate('local'), (req, res) => {
+    // issue token to user, payload is the user id
+    // const token = authenticate.getToken({ _id: req.user._id });
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({ success: true, status: 'You are successfully logged in!' });
+});
 
 //** LOGOUT
 router.get('/logout', (req, res) => {

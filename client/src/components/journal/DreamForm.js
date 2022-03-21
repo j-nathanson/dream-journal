@@ -4,8 +4,7 @@ import { Container, Col, Row, Button, FormLabel, Form } from 'react-bootstrap'
 import moment from 'moment'
 import Icon from "@mdi/react";
 import Rating from "react-rating";
-import { mdiBrightness2 } from "@mdi/js";
-
+import { mdiBrightness2, mdiBookPlusOutline, mdiSleep } from "@mdi/js";
 export default function DreamForm({ getJournal }) {
 
     const setDateFunction = (value) => {
@@ -38,8 +37,8 @@ export default function DreamForm({ getJournal }) {
     return (
         <Container className="d-flex flex-column p-5 entry-form-container mb-4">
             <Form action="" onSubmit={saveDream}>
-                <Row className='text-center mb-2'>
-                    <h2>How was your dream last night?</h2>
+                <Row className='mb-2 text-center'>
+                    <h3 className='p-0'>How was your dream last night?</h3>
                 </Row>
                 <Row className='justify-content-around align-items-center mb-3'>
                     <Col className=' d-flex flex-column p-0'>
@@ -123,8 +122,15 @@ export default function DreamForm({ getJournal }) {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row className='align-items-center '>
-                    <Button variant='warning' className='col' type="submit">Add Entry to Your Journal</Button>
+                <Row className='align-items-center'>
+                    <Button variant='warning' className='col d-flex justify-content-center align-items-end' type="submit">
+                        <Icon path={mdiBookPlusOutline}
+                            size={1}
+                            color="rgb(170, 134, 243)"
+                            className='journal-icon'
+                        />
+                        Add Entry to Your Journal
+                    </Button>
                 </Row>
             </Form>
         </Container>

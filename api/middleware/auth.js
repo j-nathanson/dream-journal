@@ -1,4 +1,9 @@
+const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const User = require('../models/userModel');
 
 function auth(req, res, next) {
     try {
@@ -23,3 +28,11 @@ function auth(req, res, next) {
 }
 
 module.exports = auth
+
+
+exports.local = passport.use(new LocalStrategy({
+    usernameField: 'email',
+}, User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());

@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
 const cors = require('cors')
 const logger = require('morgan');
+const passport = require('passport');
 
 
 // read .env at root, set up process.env
@@ -20,6 +21,7 @@ app.listen(PORT, () => {
 app.use(logger('dev'));
 app.use(express.json())
 app.use(cookieParser())
+app.use(passport.initialize());
 
 // have browser set cookies from the origin
 app.use(cors({
