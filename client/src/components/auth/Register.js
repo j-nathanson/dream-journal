@@ -7,6 +7,7 @@ import { Button, Container, Form, Row } from 'react-bootstrap'
 export default function Register() {
 
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVerify, setPasswordVerify] = useState('')
 
@@ -18,7 +19,7 @@ export default function Register() {
         e.preventDefault()
         try {
             const registerData = {
-                email, password, passwordVerify
+                email,name, password, passwordVerify
             }
             await axios.post("http://localhost:3001/auth/", registerData)
 
@@ -34,6 +35,14 @@ export default function Register() {
             <Row>
                 <Form onSubmit={register}>
                     <h1 className='mb-5'>Register a new account</h1>
+                    <Form.Group className='mb-3'>
+                        <Form.Control
+                            type="text"
+                            placeholder='name'
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
+                        />
+                    </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Control
                             type="email"

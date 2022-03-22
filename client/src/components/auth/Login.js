@@ -28,6 +28,19 @@ export default function Login() {
             console.log(err)
         }
     }
+    const loginFB = async (e) => {
+        e.preventDefault()
+        try {
+
+            await axios.get("http://localhost:3001/auth/facebook")
+
+            // // update global then navigate to home
+            // await getLoggedIn()
+            // navigate('/journal')
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <Container fluid className='d-flex align-items-center justify-content-center login-container'>
             <Row>
@@ -55,6 +68,7 @@ export default function Login() {
                     <div className='d-flex justify-content-center'>
                         <p>need an account? <Link to='/register'>Sign Up</Link> </p>
                     </div>
+
                 </Form>
             </Row>
         </Container>

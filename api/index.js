@@ -11,7 +11,7 @@ const passport = require('passport');
 dotenv.config();
 
 // server set up
-const app = express()
+const app = express();
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`)
@@ -41,4 +41,4 @@ mongoose.connect(process.env.MDB_CONNECT, {
 // routers
 
 app.use('/auth', require('./routers/userRouter'))
-// app.use('/journal', require('./routers/journalRouter')) //todo uncomment
+app.use('/journal', require('./routers/journalRouter')) 

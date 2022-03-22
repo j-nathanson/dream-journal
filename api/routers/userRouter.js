@@ -74,7 +74,7 @@ router.get('/loggedIn', (req, res) => {
     // will return true or false based if a cookies is present and verified
     //  will send 200 status code regardless
     try {
-        const { token } = req.cookies
+        const token  = req.cookies.jwt
 
         // no token
         if (!token) return res.json(false)
@@ -89,5 +89,12 @@ router.get('/loggedIn', (req, res) => {
         res.json(false)
     }
 })
+
+//* FB LOGIN
+router.get("/facebook", passport.authenticate('facebook'), (req, res) => {})
+router.get('/facebook/callback', passport.authenticate('facebook'),
+    (req, res) => {
+        res.send('it worked') //redirect to profile page
+    }) // route to listen for after fb authenticates
 
 module.exports = router

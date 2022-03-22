@@ -16,11 +16,13 @@ export default function Router() {
                     <>
                         <Route path='/' element={<Login />} />
                         <Route path='/register' element={<Register />} />
-                    </>}
+                    </>
+                }
                 {loggedIn === true &&
                     <>
                         <Route path='/journal' element={<Journal />} />
-                    </>}
+                    </>
+                }
             </Routes>
         </BrowserRouter>
     )

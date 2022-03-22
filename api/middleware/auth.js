@@ -4,30 +4,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../models/userModel');
-
-// function auth(req, res, next) {
-//     try {
-//         const { token } = req.cookies
-
-//         // empty token, signed out
-//         if (!token) return res.status(401).json({ errorMessage: "Unauthorized" })
-
-//         // checking token by using secret, will throw an error if not the same
-//         const verified = jwt.verify(token, process.env.JWT_SECRET)
-
-//         // update req object
-//         //object with 'user' prop, which is the id from the db
-//         req.user = verified.user
-
-//         // exit out of middleware
-//         next()
-//     } catch (err) {
-//         console.log(err)
-//         res.status(401).json({ errorMessage: "Unauthorized" })
-//     }
-// }
-
-// module.exports = auth
+// const FacebookStrategy = require('passport-facebook-token')
+const FacebookStrategy = require("passport-facebook").Strategy
 
 // passport.authenticate('local)
 exports.local = passport.use(new LocalStrategy({
@@ -49,10 +27,9 @@ exports.getToken = function (user) {
 // configure jwt secret key and how to extract the token
 const opts = {};
 opts.secretOrKey = process.env.JWT_SECRET;
-opts.jwtFromRequest = function(req) {
+opts.jwtFromRequest = function (req) {
     let token = null;
-    if (req && req.cookies)
-    {
+    if (req && req.cookies) {
         token = req.cookies.jwt;
     }
     return token;
@@ -82,3 +59,37 @@ exports.jwtPassport = passport.use(
 
 // export as middleware function
 exports.verifyUser = passport.authenticate('jwt', { session: false });
+
+
+//! Facebook Strategy
+exports.facebookPassport = passport.use(new FacebookStrategy({
+    clientID: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_SECRET,
+    callbackUrl: "/auth/facebook/callback" // route to send back after it verifies the user
+},
+    // callback used after verififying
+    (accessToken, refreshToken, profile, done) => {
+        User.findOne({ facebookId: profile.id }, (err, user) => {
+            if (err) {
+                return done(err, false);
+            }
+            if (!err && user) {
+                return done(null, user);
+            } else {
+                console.log(user)
+                // user = new User({ username: profile.displayName });
+                // user.facebookId = profile.id;
+                // user.firstname = profile.name.givenName;
+                // user.lastname = profile.name.familyName;
+
+                // user.save((err, user) => {
+                //     if (err) {
+                //         return done(err, false);
+                //     } else {
+                //         return done(null, user);
+                //     }
+                // });
+            }
+        });
+    }
+))
