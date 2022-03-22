@@ -46,20 +46,23 @@ exports.getToken = function (user) {
 
 };
 
-
+// configure jwt secret key and how to extract the token
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
+opts.jwtFromRequest = function(req) {
+    let token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies.jwt;
+    }
+    return token;
+};
 
-// export jwt passport
+// set up jwtPassport strategy 
 exports.jwtPassport = passport.use(
-    // use jwt way to authenticate. config params, callback with payload from checking the token and 'done' callback function provide by passport-jwt to access the 'user' document so it can load info from in onto the req object
     new JwtStrategy(
         opts,
         (jwt_payload, done) => {
-            // jwt_payload object
-            console.log('JWT payload:', jwt_payload);
-            // search the data bases with the id from the token
             User.findOne({ _id: jwt_payload._id }, (err, user) => {
                 if (err) {
                     // handle error
@@ -76,3 +79,6 @@ exports.jwtPassport = passport.use(
         }
     )
 );
+
+// export as middleware function
+exports.verifyUser = passport.authenticate('jwt', { session: false });

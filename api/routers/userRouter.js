@@ -53,16 +53,16 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 
     return res
         .status(200)
-        .cookie("token", token, { httpOnly: true })
+        .cookie("jwt", token, { httpOnly: true })
         .setHeader('Content-Type', 'application/json')
         .json({ success: true, status: 'You are successfully logged in!' })
 });
 
 //** LOGOUT
-router.get('/logout', (req, res) => {
+router.get('/logout', auth.verifyUser, (req, res) => {
     // attempt to delete, if you can't at least make it empty and expired so the browser can automatically clear it.
     res
-        .cookie('token', '', {
+        .cookie('jwt', '', {
             httpOnly: true,
             expires: new Date(0)
         })
