@@ -28,19 +28,11 @@ export default function Login() {
             console.log(err)
         }
     }
-    const loginFB = async (e) => {
-        e.preventDefault()
-        try {
 
-            await axios.get("http://localhost:3001/auth/facebook")
-
-            // // update global then navigate to home
-            // await getLoggedIn()
-            // navigate('/journal')
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    const loginGoogle = () => {
+        window.open('http://localhost:3001/auth/google', '_self')
+      }
+    
     return (
         <Container fluid className='d-flex align-items-center justify-content-center login-container'>
             <Row>
@@ -69,6 +61,9 @@ export default function Login() {
                         <p>need an account? <Link to='/register'>Sign Up</Link> </p>
                     </div>
 
+
+                    <Button className='w-100 mb-3' variant='success' type="" onClick={loginGoogle}>Google Login</Button>
+                    
                 </Form>
             </Row>
         </Container>

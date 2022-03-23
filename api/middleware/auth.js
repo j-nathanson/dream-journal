@@ -4,16 +4,23 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../models/userModel');
-// const FacebookStrategy = require('passport-facebook-token')
-const FacebookStrategy = require("passport-facebook").Strategy
+const { deleteOne } = require('../models/userModel');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // passport.authenticate('local)
 exports.local = passport.use(new LocalStrategy({
     usernameField: 'email',
 }, User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+passport.serializeUser((user, done) => {
+    done(null, user)
+})
+passport.deserializeUser((user, done) => {
+    done(null, user)
+})
 
 // authenticate.getToken()
 exports.getToken = function (user) {
@@ -60,36 +67,37 @@ exports.jwtPassport = passport.use(
 // export as middleware function
 exports.verifyUser = passport.authenticate('jwt', { session: false });
 
-
-//! Facebook Strategy
-exports.facebookPassport = passport.use(new FacebookStrategy({
-    clientID: process.env.FB_CLIENT_ID,
-    clientSecret: process.env.FB_SECRET,
-    callbackUrl: "/auth/facebook/callback" // route to send back after it verifies the user
+// Google strategy
+exports.googlePassport = passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/auth/google/callback"
 },
-    // callback used after verififying
-    (accessToken, refreshToken, profile, done) => {
-        User.findOne({ facebookId: profile.id }, (err, user) => {
-            if (err) {
-                return done(err, false);
-            }
-            if (!err && user) {
-                return done(null, user);
-            } else {
-                console.log(user)
-                // user = new User({ username: profile.displayName });
-                // user.facebookId = profile.id;
-                // user.firstname = profile.name.givenName;
-                // user.lastname = profile.name.familyName;
+    async function (accessToken, refreshToken, profile, cb) {
 
-                // user.save((err, user) => {
-                //     if (err) {
-                //         return done(err, false);
-                //     } else {
-                //         return done(null, user);
-                //     }
-                // });
+        const userGmail = profile.emails[0].value;
+        try {
+            const user = await User.findOne({ email: userGmail })
+
+            if (user) {
+                // found the user
+                return cb(null, user);
+
+            } else {
+                // create a user
+                const { givenName } = profile.name;
+
+                const newUser = await new User({ email: userGmail, name: givenName }).save();
+                
+                const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET, { expiresIn: 3600 });
+            
+                return cb(null, newUser);
+
             }
-        });
+        } catch (err) {
+            return cb(err, false);
+        }
+
+
     }
-))
+));

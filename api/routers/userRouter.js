@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const User = require('../models/userModel')
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const auth = require('../middleware/auth')
+const CLIENT_URL = "http://localhost:3000/";
+
 //* auth/
 
 //** REGISTER
@@ -74,7 +75,7 @@ router.get('/loggedIn', (req, res) => {
     // will return true or false based if a cookies is present and verified
     //  will send 200 status code regardless
     try {
-        const token  = req.cookies.jwt
+        const token = req.cookies.jwt
 
         // no token
         if (!token) return res.json(false)
@@ -90,11 +91,25 @@ router.get('/loggedIn', (req, res) => {
     }
 })
 
-//* FB LOGIN
-router.get("/facebook", passport.authenticate('facebook'), (req, res) => {})
-router.get('/facebook/callback', passport.authenticate('facebook'),
-    (req, res) => {
-        res.send('it worked') //redirect to profile page
-    }) // route to listen for after fb authenticates
 
+router.get('/login/failed', (req, res) => {
+    return res
+        .status(401)
+        .json({
+            success: false,
+            message: 'failure'
+        })
+})
+
+router.get('/login/success', (req, res) => {
+
+})
+
+//* GOOGLE LOGIN
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
+
+router.get('/google/callback', passport.authenticate('google', {
+    successRedirect: 'http://localhost:3000/auth/login/success',
+    failureRedirect: '/login/failed'
+}))
 module.exports = router

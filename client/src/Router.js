@@ -12,15 +12,15 @@ export default function Router() {
         <BrowserRouter>
             <Navigation />
             <Routes className='h-100'>
-                {loggedIn === false &&
-                    <>
-                        <Route path='/' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
-                    </>
-                }
                 {loggedIn === true &&
                     <>
-                        <Route path='/journal' element={<Journal />} />
+                        <Route exact path='/journal' element={<Journal />} />
+                    </>
+                }
+                {loggedIn === false &&
+                    <>
+                        <Route exact path='/register' element={<Register />} />
+                        <Route exact path='/' element={<Login />} />
                     </>
                 }
             </Routes>
