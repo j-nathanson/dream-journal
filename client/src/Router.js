@@ -12,19 +12,24 @@ export default function Router() {
         <BrowserRouter>
             <Navigation />
             <Routes className='h-100'>
-                {loggedIn === true &&
-                    <>
-                        <Route exact path='/journal' element={<Journal />} />
-                    </>
-                }
-                {loggedIn === false &&
-                    <>
-                        <Route exact path='/register' element={<Register />} />
-                        <Route exact path='/' element={<Login />} />
-                    </>
-                }
+                <Route exact path='/' element={<Login />} />
+                <Route exact path='/register' element={<Register />} />
+                <Route exact path='/journal' element={<Journal />} />
+
             </Routes>
         </BrowserRouter>
     )
 }
 
+// TODO might include conditional routing but was getting 'not found warnings'
+// //   {loggedIn === true &&
+// <>
+// <Route exact path='/journal' element={<Journal />} />
+// </>
+// }
+// {loggedIn === false &&
+// <>
+// <Route exact path='/register' element={<Register />} />
+// <Route exact path='/' element={<Login />} />
+// </>
+// }

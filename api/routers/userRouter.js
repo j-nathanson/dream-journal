@@ -62,12 +62,12 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 //** LOGOUT
 router.get('/logout', auth.verifyUser, (req, res) => {
     // attempt to delete, if you can't at least make it empty and expired so the browser can automatically clear it.
-    res
-        .cookie('jwt', '', {
-            httpOnly: true,
-            expires: new Date(0)
-        })
+    return res
+        .clearCookie('jwt')
+        .clearCookie('session')
+        .clearCookie('session.sig')
         .send()
+
 })
 
 //** IS USER LOGGED IN?
@@ -91,7 +91,7 @@ router.get('/loggedIn', (req, res) => {
     }
 })
 
-
+// GET failed login attempt
 router.get('/login/failed', (req, res) => {
     return res
         .status(401)
@@ -101,15 +101,28 @@ router.get('/login/failed', (req, res) => {
         })
 })
 
+// GET Give google login/register users a jwt token
 router.get('/login/success', (req, res) => {
-
+    if (req.user) {
+        const token = auth.getToken({ _id: req.user._id });
+        return res
+            .status(200)
+            .cookie("jwt", token, { httpOnly: true })
+            .json({
+                success: true,
+                status: 'you are logged in!',
+            })
+    }
+    return res
+        .status(202)
+        .json({ message: 'Please login with the correct credentials.' })
 })
 
 //* GOOGLE LOGIN
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
 router.get('/google/callback', passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000/auth/login/success',
+    successRedirect: CLIENT_URL,
     failureRedirect: '/login/failed'
 }))
 module.exports = router

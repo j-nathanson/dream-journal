@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import AuthContext from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,6 +6,7 @@ import { Button, Container, Form, Row } from 'react-bootstrap'
 
 export default function Login() {
 
+    const [user, setUser] = useState(null)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -31,8 +32,25 @@ export default function Login() {
 
     const loginGoogle = () => {
         window.open('http://localhost:3001/auth/google', '_self')
-      }
-    
+    }
+
+
+    const getToken = async () => {
+        try {
+            let res = await axios.get('http://localhost:3001/auth/login/success')
+            if (res.status === 200) {
+                await getLoggedIn()
+                navigate('/journal')
+            }
+            throw new Error('authentication has failed')
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getToken()
+    }, [])
+
     return (
         <Container fluid className='d-flex align-items-center justify-content-center login-container'>
             <Row>
@@ -63,7 +81,7 @@ export default function Login() {
 
 
                     <Button className='w-100 mb-3' variant='success' type="" onClick={loginGoogle}>Google Login</Button>
-                    
+
                 </Form>
             </Row>
         </Container>

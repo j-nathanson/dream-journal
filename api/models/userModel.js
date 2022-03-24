@@ -3,7 +3,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    // passwordHash: { type: String, required: true }
+    googleId: { type: String }
 })
 
 // will automatically add username and password/ will salt and hash password

@@ -12,16 +12,6 @@ exports.local = passport.use(new LocalStrategy({
     usernameField: 'email',
 }, User.authenticate()));
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
-passport.serializeUser((user, done) => {
-    done(null, user)
-})
-passport.deserializeUser((user, done) => {
-    done(null, user)
-})
-
 // authenticate.getToken()
 exports.getToken = function (user) {
     // user contains id for user doc
@@ -73,31 +63,34 @@ exports.googlePassport = passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3001/auth/google/callback"
 },
-    async function (accessToken, refreshToken, profile, cb) {
-
-        const userGmail = profile.emails[0].value;
+    async function (accessToken, refreshToken, profile, done) {
         try {
+            const userGmail = profile.emails[0].value;
+            const googleId = profile.id
             const user = await User.findOne({ email: userGmail })
 
             if (user) {
                 // found the user
-                return cb(null, user);
+                return done(null, user);
 
             } else {
                 // create a user
                 const { givenName } = profile.name;
 
-                const newUser = await new User({ email: userGmail, name: givenName }).save();
-                
-                const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET, { expiresIn: 3600 });
-            
-                return cb(null, newUser);
+                const newUser = await new User({ email: userGmail, name: givenName, googleId: googleId }).save();
+
+                return done(null, newUser);
 
             }
         } catch (err) {
             return cb(err, false);
         }
-
-
     }
 ));
+
+passport.serializeUser((user, done) => {
+    done(null, user)
+})
+passport.deserializeUser((user, done) => {
+    done(null, user)
+})

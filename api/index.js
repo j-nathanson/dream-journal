@@ -1,7 +1,9 @@
 const express = require("express")
+const session = require('express-session')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
+const cookieSession = require('cookie-session')
 const cors = require('cors')
 const logger = require('morgan');
 const passport = require('passport');
@@ -12,16 +14,22 @@ dotenv.config();
 
 // server set up
 const app = express();
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-    console.log(`Server started on port: ${PORT}`)
-})
+// set up cookie to use for oauth
+app.use(cookieSession(
+    {
+        name: "session",
+        keys: ['lama'],
+        maxAge: 24 * 60 * 60 * 100,
+        httpOnly: true
+    }
+))
 
 // * middleware
 app.use(logger('dev'));
 app.use(express.json())
 app.use(cookieParser())
 app.use(passport.initialize());
+app.use(passport.session())
 
 // have browser set cookies from the origin
 app.use(cors({
@@ -42,4 +50,10 @@ mongoose.connect(process.env.MDB_CONNECT, {
 // routers
 
 app.use('/auth', require('./routers/userRouter'))
-app.use('/journal', require('./routers/journalRouter')) 
+app.use('/journal', require('./routers/journalRouter'))
+
+// port
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`Server started on port: ${PORT}`)
+})
