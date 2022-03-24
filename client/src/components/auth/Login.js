@@ -37,7 +37,7 @@ export default function Login() {
 
     const getToken = async () => {
         try {
-            let res = await axios.get('http://localhost:3001/auth/login/success')
+            const res = await axios.get('http://localhost:3001/auth/login/success')
             if (res.status === 200) {
                 await getLoggedIn()
                 navigate('/journal')
@@ -75,12 +75,14 @@ export default function Login() {
 
                     <Button className='w-100 mb-3' variant='success' type="submit">Log in</Button>
 
+                    
+                    <Button className=" w-100 mb-3 btn-google" onClick={loginGoogle}>
+                        Sign in with Google <span className='fa fa-google' />
+                    </Button>
+
                     <div className='d-flex justify-content-center'>
-                        <p>need an account? <Link to='/register'>Sign Up</Link> </p>
+                        <p>need an account? <Link className='auth-link' to='/register'>Sign Up</Link> </p>
                     </div>
-
-
-                    <Button className='w-100 mb-3' variant='success' type="" onClick={loginGoogle}>Google Login</Button>
 
                 </Form>
             </Row>
