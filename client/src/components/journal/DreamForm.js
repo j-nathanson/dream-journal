@@ -4,7 +4,7 @@ import { Container, Col, Row, Button, FormLabel, Form } from 'react-bootstrap'
 import moment from 'moment'
 import Icon from "@mdi/react";
 import Rating from "react-rating";
-import { mdiBrightness2, mdiBookPlusOutline, mdiSleep } from "@mdi/js";
+import { mdiBrightness2, mdiBookPlusOutline } from "@mdi/js";
 export default function DreamForm({ getJournal }) {
 
     const setDateFunction = (value) => {

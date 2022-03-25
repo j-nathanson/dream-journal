@@ -3,30 +3,36 @@ import axios from 'axios'
 import AuthContext from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Container, Form, Row } from 'react-bootstrap'
+import { useForm } from "react-hook-form";
+import CustomInput from '../form/CustomInput'
 
 export default function Login() {
 
-    const [user, setUser] = useState(null)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
+    const [error, setError] = useState('')
     const { getLoggedIn } = useContext(AuthContext)
     const navigate = useNavigate()
 
 
-    const login = async (e) => {
-        e.preventDefault()
+    const { control, handleSubmit, formState: { } } = useForm();
+
+
+    const login = async (data) => {
         try {
             const loginData = {
-                email, password
+                email: data.email,
+                password: data.password
             }
+
             await axios.post("http://localhost:3001/auth/login", loginData)
 
             // update global then navigate to home
-            await getLoggedIn()
+            const result = await getLoggedIn()
+            console.log(result)
             navigate('/journal')
         } catch (err) {
-            console.log(err)
+            // console.log(err.message)
+            setError('Please correct your email/password')
+
         }
     }
 
@@ -58,25 +64,27 @@ export default function Login() {
                 <h1 className='login-header p-0'>Welcome to dreamy...</h1>
             </Row>
             <Row >
-                <Form onSubmit={login}>
+                <Form onSubmit={handleSubmit(login)}>
                     <h2 className='mb-5'>Log in to your account</h2>
-                    <Form.Group className='mb-3'>
-                        <Form.Control
-                            type="email"
-                            placeholder='Email'
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                        />
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Control
-                            type="password"
-                            placeholder='Password'
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                        />
-                    </Form.Group>
-
+                    {error && <p>{error}</p>}
+                    <CustomInput
+                        name="email"
+                        placeholder="Email"
+                        control={control}
+                        rules={{
+                            required: "Email is Required",
+                            pattern: { value: /(.+)@(.+){2,}\.(.+){2,}/, message: 'Please enter valid email.' }
+                        }}
+                    />
+                    <CustomInput
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        control={control}
+                        rules={{
+                            required: "Password is Required"
+                        }}
+                    />
                     <Button className='w-100 mb-3' variant='success' type="submit">Log in</Button>
 
 
@@ -93,3 +101,21 @@ export default function Login() {
         </Container>
     )
 }
+
+
+// <Form.Group className='mb-3'>
+// <Form.Control
+//     type="password"
+//     placeholder='Password'
+//     onChange={(e) => setPassword(e.target.value)}
+//     value={password}
+// />
+// </Form.Group>
+//  <Form.Group className='mb-3'>
+// <Form.Control
+// type="email"
+// placeholder='Email'
+// onChange={(e) => setEmail(e.target.value)}
+// value={email}
+// />
+// </Form.Group>
