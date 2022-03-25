@@ -52,10 +52,14 @@ export default function Login() {
     }, [])
 
     return (
-        <Container fluid className='d-flex align-items-center justify-content-center login-container'>
-            <Row>
+        <Container fluid className='d-flex flex-column align-items-center justify-content-center p-1 login-container'>
+
+            <Row className='mb-5'>
+                <h1 className='login-header p-0'>Welcome to dreamy...</h1>
+            </Row>
+            <Row >
                 <Form onSubmit={login}>
-                    <h1 className='mb-5'>Log in to your account</h1>
+                    <h2 className='mb-5'>Log in to your account</h2>
                     <Form.Group className='mb-3'>
                         <Form.Control
                             type="email"
@@ -75,7 +79,7 @@ export default function Login() {
 
                     <Button className='w-100 mb-3' variant='success' type="submit">Log in</Button>
 
-                    
+
                     <Button className=" w-100 mb-3 btn-google" onClick={loginGoogle}>
                         Sign in with Google <span className='fa fa-google' />
                     </Button>
