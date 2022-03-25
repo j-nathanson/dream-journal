@@ -54,7 +54,7 @@ export default function DreamForm({ getJournal }) {
                     </Col>
                 </Row>
                 <Row className='justify-content-between mb-4'>
-                    <Col xs={5} className=' d-flex flex-column p-0'>
+                    <Col xs={12} sm={5} className=' d-flex flex-column p-0 mb-3'>
                         <Form.Group>
                             <Form.Label htmlFor="date">Date</Form.Label>
                             <Form.Control
@@ -66,8 +66,8 @@ export default function DreamForm({ getJournal }) {
                             />
                         </Form.Group>
                     </Col>
-                    <Col xs={7} className='d-flex flex-column align-items-end text-center'>
-                        <FormLabel htmlFor="rating" className='align-self-end'>Rate your dream</FormLabel>
+                    <Col xs={12} sm={7} className='rating-form d-flex flex-column p-0'>
+                        <FormLabel htmlFor="rating">Rate your dream</FormLabel>
                         <Rating
                             id="rating"
                             emptySymbol={
@@ -100,11 +100,11 @@ export default function DreamForm({ getJournal }) {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row className='justify-content-center mb-4'>
-                    <Col xs={7} md={6}>
+                <Row className='justify-content-between mb-4'>
+                    <Col xs={6} className='p-0'>
                         <FormLabel className=''>Add a tag for your dream</FormLabel>
                     </Col>
-                    <Col xs={5} className=' p-0'>
+                    <Col xs={6} className='p-0'>
                         <Form.Group>
                             <Form.Select
                                 id="dreamTags"
@@ -129,7 +129,7 @@ export default function DreamForm({ getJournal }) {
                             color="rgb(170, 134, 243)"
                             className='journal-icon'
                         />
-                        Add Entry to Your Journal
+                        Add Entry
                     </Button>
                 </Row>
             </Form>

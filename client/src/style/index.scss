@@ -1,6 +1,10 @@
 @import 'fonts';
 @import 'colors';
 
+$primary:rgba(255, 255, 255, 0.254);
+
+@import "bootstrap";
+
 * {
     font-family: 'Epilogue', sans-serif;
 }
@@ -57,4 +61,20 @@ p {
     .container {
         width: 60% !important;
     }
+}
+
+@media only screen and (max-width: 575px) {
+    .rating-form {
+        align-items: start
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .rating-form {
+        align-items: end
+    }
+}
+
+.btn-primary {
+    color: white !important;
 }

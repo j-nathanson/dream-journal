@@ -35,51 +35,11 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
         deleteEntry(_id)
     }
     return (
-        <Container className='p-4 mb-4  entry-container'>
+        <Container className='p-4 mb-4 entry-container'>
             <Form onSubmit={submitEdit}>
                 <Row className='mb-4'>
-                    <Col xs={7}>
-                        <h2>{moment(date).format('dddd, MMMM Do, YYYY')}</h2>
-                    </Col>
-                    <Col className='p-0 d-flex justify-content-end align-items-start'>
-                        {toggle && (
-                            <div>
-                                <Button variant='success' onClick={() => setToggle(!toggle)} className='p-2'>
-                                    <Icon path={mdiLeadPencil}
-                                        size={.8}
-                                        color="white"
-                                        title='edit'
-
-                                    />
-                                    edit
-                                </Button>
-                                <Button variant='danger' className='p-2' onClick={() => handleShow()}>
-                                    <Icon path={mdiTrashCanOutline}
-                                        size={.8}
-                                        color="white"
-                                    />
-                                    delete
-                                </Button>
-                            </div>
-                        )}
-                        {!toggle && (
-                            <div>
-                                <Button variant='warning' onClick={() => setToggle(!toggle)} className='p-2'>
-                                    <Icon path={mdiCancel}
-                                        size={.8}
-                                        color="black"
-                                    />
-                                    cancel
-                                </Button>
-                                <Button type='submit' variant='info' className='p-2'>
-                                    <Icon path={mdiPlaylistCheck}
-                                        size={.8}
-                                        color="black"
-                                    />
-                                    submit
-                                </Button>
-                            </div>
-                        )}
+                    <Col xs={12}>
+                        <h2>{moment(date).format('ddd, MMMM Do, YYYY')}</h2>
                     </Col>
                 </Row>
                 <Row className='mb-4'>
@@ -126,7 +86,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                             id="dreamTags"
                             value={newTag}
                             onChange={e => setNewTag(e.target.value)}
-                            className='text-muted'
+                            className='text-muted mb-3'
                         >
                             <option value='normal'>normal</option>
                             <option value='daydream'>daydream</option>
@@ -137,6 +97,49 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                         </Form.Select>
                     </Form.Group>
                 )}
+                <Form.Group>
+                    <Row className='justify-content-start align-items-center  p-2'>
+                        {toggle && (
+                            <>
+                                <Button variant='primary' onClick={() => setToggle(!toggle)} className='col-3' >
+                                    <Icon path={mdiLeadPencil}
+                                        size={.6}
+                                        color="white"
+                                        title='edit'
+
+                                    />
+                                    edit
+                                </Button>
+                                <Button variant='primary' onClick={() => handleShow()} className='col-3 m-1'>
+                                    <Icon path={mdiTrashCanOutline}
+                                        size={.6}
+                                        color="white"
+                                    />
+                                    delete
+                                </Button>
+                            </>
+
+                        )}
+                        {!toggle && (
+                            <>
+                                <Button variant='primary' onClick={() => setToggle(!toggle)} className='col-4'>
+                                    <Icon path={mdiCancel}
+                                        size={.6}
+                                        color="white"
+                                    />
+                                    cancel
+                                </Button>
+                                <Button type='submit' variant='primary' className='col-4 m-1'>
+                                    <Icon path={mdiPlaylistCheck}
+                                        size={.6}
+                                        color="white"
+                                    />
+                                    submit
+                                </Button>
+                            </>
+                        )}
+                    </Row>
+                </Form.Group>
             </Form>
 
             <Modal show={show} onHide={handleShow} centered>
@@ -164,7 +167,6 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
 export default function DreamList({ journal, updateEntry, deleteEntry }) {
 
     if (journal.length === 0) {
-        console.log('empty')
         return (
             <div className='empty-fill-div' />
         )
