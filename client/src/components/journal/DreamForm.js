@@ -5,6 +5,9 @@ import moment from 'moment'
 import Icon from "@mdi/react";
 import Rating from "react-rating";
 import { mdiBrightness2, mdiBookPlusOutline } from "@mdi/js";
+import CustomInput from '../form/CustomInput';
+import { useForm } from 'react-hook-form';
+
 export default function DreamForm({ getJournal }) {
 
     const setDateFunction = (value) => {
@@ -15,6 +18,8 @@ export default function DreamForm({ getJournal }) {
     const [rating, setRating] = useState(3)
     const [tag, setTag] = useState('normal')
     const [description, setDescription] = useState('')
+
+    const [error, setError] = useState('')
 
     // add an entry to db
     const saveDream = async (e) => {
@@ -89,6 +94,8 @@ export default function DreamForm({ getJournal }) {
                     </Col>
                 </Row>
                 <Row className='mb-4 '>
+
+
                     <Col className='p-0'>
                         <Form.Group>
                             <Form.Control as="textarea"
@@ -96,6 +103,7 @@ export default function DreamForm({ getJournal }) {
                                 onChange={(e) => setDescription(e.target.value)} placeholder='describe your dream to the best of your ability'
                                 rows="2"
                                 className='w-100'
+                                required
                             />
                         </Form.Group>
                     </Col>

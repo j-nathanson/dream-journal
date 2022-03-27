@@ -13,6 +13,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
     const { _id, title, rating, date, description, tag } = entry
     const [toggle, setToggle] = useState(true)
     // same as properties in object for updateEntry
+
     const [newTitle, setNewTitle] = useState(title)
     const [newDescription, setNewDescription] = useState(description)
     const [newRating, setNewRating] = useState(rating)
@@ -45,10 +46,11 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                 <Row className='mb-4'>
                     <Col xs={8}>
                         <ContentEditable
-                            html={newTitle} // innerHTML of the editable div
-                            disabled={toggle}  // use true to disable editing     
-                            onChange={(e) => setNewTitle(e.target.value)} // handle innerHTML change
+                            html={toggle ? title : newTitle} // 
+                            disabled={toggle} //boolean to edit
+                            onChange={(e) => setNewTitle(e.target.value)} // 
                             tagName='h3'
+                            style={{ color: !toggle ? 'gold' : "white" }}
                         />
                     </Col>
                     <Col className='d-flex justify-content-end'>
@@ -73,10 +75,11 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                     </Col>
                 </Row>
                 <ContentEditable
-                    html={newDescription}
+                    html={toggle ? description : newDescription}
                     disabled={toggle}
                     onChange={(e) => setNewDescription(e.target.value)}
                     tagName='p'
+                    style={{ color: !toggle ? 'gold' : "white" }}
                 />
                 {toggle && (<p>Tag: {tag}</p>)}
 

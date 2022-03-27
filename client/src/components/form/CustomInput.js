@@ -8,7 +8,7 @@ export default function CustomInput({
     rules = {},
     type = 'text',
     placeholder,
-    value = ""
+    value = '',
 }) {
     return (
         <Controller
