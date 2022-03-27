@@ -7,7 +7,8 @@ const dreamSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        required: true
+        default: 'Untitled',
+        // required: true
     },
     date: {
         type: String,

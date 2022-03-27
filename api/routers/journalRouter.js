@@ -11,7 +11,7 @@ router.get('/', auth.verifyUser, async (req, res) => {
         const userId = req.user._id
         const journal = await Dream.find({ userId: userId })
 
-         res.json(journal)
+        res.json(journal)
     } catch (err) {
         console.log(err)
         // 500 server error
@@ -23,11 +23,17 @@ router.get('/', auth.verifyUser, async (req, res) => {
 router.post('/', auth.verifyUser, async (req, res) => {
     try {
         const { title, date, rating, description, tag } = req.body;
+
         const userId = req.user._id
 
-        const newDream = new Dream({
-            userId, title, date, rating, description, tag
-        })
+        const entry = { userId, date, rating, description, tag }
+
+        // if no title was given then in the db the default value will be 'Untitled'
+        if (title) {
+            entry.title = title
+        }
+
+        const newDream = new Dream(entry)
 
         // save new Entry in db
         savedDream = await newDream.save()
