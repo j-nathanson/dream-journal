@@ -5,8 +5,8 @@ const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
 const cookieSession = require('cookie-session')
 const cors = require('cors')
-const logger = require('morgan');
-const passport = require('passport');
+const logger = require('morgan')
+const passport = require('passport')
 
 
 // read .env at root, set up process.env
@@ -18,7 +18,7 @@ const app = express();
 app.use(cookieSession(
     {
         name: "session",
-        keys: ['lama'],
+        keys: [process.env.COOKIE_SECRET],
         maxAge: 24 * 60 * 60 * 100,
         httpOnly: true
     }
@@ -48,7 +48,6 @@ mongoose.connect(process.env.MDB_CONNECT, {
 })
 
 // routers
-
 app.use('/auth', require('./routers/userRouter'))
 app.use('/journal', require('./routers/journalRouter'))
 
