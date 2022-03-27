@@ -63,7 +63,8 @@ export default function Journal() {
                 journal={
                     filter === 'all'
                         ? journal
-                        : journal.filter(entry => filter === entry.date.slice(5, 7))}
+                        : journal.filter(entry => filter === entry.date.slice(5, 7))
+                }
                 updateEntry={updateEntry}
                 deleteEntry={deleteEntry}
             />

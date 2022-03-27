@@ -1,0 +1,8 @@
+@import '../colors.scss';
+
+.edit-tag-dropdown {
+    background-color: $purple !important;
+    border: 1.5px solid white !important;
+    color: white !important;
+    background-image: url('../../assets/images/white-chevron.png') !important;
+}

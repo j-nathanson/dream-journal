@@ -43,14 +43,18 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                         <h2>{moment(date).format('ddd, MMMM Do, YYYY')}</h2>
                     </Col>
                 </Row>
-                <Row className='mb-4'>
-                    <Col xs={8}>
+                <Row className='mb-4 align-items-end'>
+                    <Col xs={8} >
                         <ContentEditable
                             html={toggle ? title : newTitle} // 
                             disabled={toggle} //boolean to edit
                             onChange={(e) => setNewTitle(e.target.value)} // 
                             tagName='h3'
-                            style={{ color: !toggle ? 'gold' : "white" }}
+                            className='m-0 pt-2 px-1'
+                            style={{
+                                border: !toggle ? '1.5px solid white' : '', borderRadius: '5px'
+                            }}
+
                         />
                     </Col>
                     <Col className='d-flex justify-content-end'>
@@ -79,7 +83,10 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                     disabled={toggle}
                     onChange={(e) => setNewDescription(e.target.value)}
                     tagName='p'
-                    style={{ color: !toggle ? 'gold' : "white" }}
+                    className='pt-2 px-1'
+                    style={{
+                        border: !toggle ? '1.5px solid white' : '', borderRadius: '5px'
+                    }}
                 />
                 {toggle && (<p>Tag: {tag}</p>)}
 
@@ -89,7 +96,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                             id="dreamTags"
                             value={newTag}
                             onChange={e => setNewTag(e.target.value)}
-                            className='text-muted mb-3'
+                            className='mb-3 edit-tag-dropdown'
                         >
                             <option value='normal'>normal</option>
                             <option value='daydream'>daydream</option>

@@ -62,7 +62,7 @@ export default function Register() {
     }, [])
 
     return (
-        <Container fluid className='d-flex align-items-center justify-content-center login-container'>
+        <Container fluid className='d-flex align-items-center justify-content-center register-container'>
             <Row>
                 <Form onSubmit={handleSubmit(register)}>
                     <h1 className='mb-5'>Register a new account</h1>
