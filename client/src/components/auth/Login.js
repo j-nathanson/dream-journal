@@ -61,7 +61,7 @@ export default function Login() {
         <Container fluid className='d-flex flex-column align-items-center justify-content-center p-1 login-container'>
 
             <Row className='mb-5'>
-                <h1 className='login-header p-0'>Welcome to dreamy...</h1>
+                <h1 className='p-0'>Welcome to dreamy...</h1>
             </Row>
             <Row >
                 <Form onSubmit={handleSubmit(login)}>
@@ -101,21 +101,3 @@ export default function Login() {
         </Container>
     )
 }
-
-
-// <Form.Group className='mb-3'>
-// <Form.Control
-//     type="password"
-//     placeholder='Password'
-//     onChange={(e) => setPassword(e.target.value)}
-//     value={password}
-// />
-// </Form.Group>
-//  <Form.Group className='mb-3'>
-// <Form.Control
-// type="email"
-// placeholder='Email'
-// onChange={(e) => setEmail(e.target.value)}
-// value={email}
-// />
-// </Form.Group>

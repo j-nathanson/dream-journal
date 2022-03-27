@@ -9,7 +9,7 @@ export default function Navigation() {
     // get global variable
     const { loggedIn } = useContext(AuthContext)
     return (
-        <Navbar collapseOnSelect bg='dark' variant='dark' expand="md">
+        <Navbar collapseOnSelect bg='dark' variant='dark' expand="lg">
             <Navbar.Toggle className='ml-auto' aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav>

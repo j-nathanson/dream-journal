@@ -18,6 +18,6 @@ export default function LogOutBtn() {
     }
 
     return (
-        <Button onClick={logOut}>Log out</Button>
+        <Button variant='danger' onClick={logOut}>Log out</Button>
     )
 }

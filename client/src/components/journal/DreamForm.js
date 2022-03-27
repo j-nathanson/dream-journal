@@ -95,7 +95,6 @@ export default function DreamForm({ getJournal }) {
                 </Row>
                 <Row className='mb-4 '>
 
-
                     <Col className='p-0'>
                         <Form.Group>
                             <Form.Control as="textarea"
