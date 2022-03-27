@@ -1,8 +1,8 @@
 @import 'fonts';
 @import 'colors';
-
-$primary:rgba(255, 255, 255, 0.254);
-
+@import 'mediaQ';
+@import'components/Login';
+@import'components/DreamForm';
 @import "bootstrap";
 
 * {
@@ -23,69 +23,12 @@ p {
     width: 80% !important;
 }
 
-.login-container {
-    height: 100vh;
-    background: rgb(170, 134, 243);
-}
-
-.login-header {
-    font-family: 'Courgette', cursive;
-    font-size: 3.75rem;
+.auth-link {
+    color: $blue;
 }
 
 .journal-container {
-    background: rgb(170, 134, 243);
-}
-
-.entry-form-container {
-    background: rgb(170, 134, 243);
-    border: 3px solid gold;
-    border-radius: 20px;
-}
-
-.entry-container {
-    border: 3px solid gold;
-    border-radius: 20px;
-
-}
-
-.empty-fill-div {
-    height: 30vh;
-}
-
-.journal-icon {
-    margin-right: 10px;
-    margin-bottom: 3px;
-}
-
-.auth-link {
-    color: rgb(51, 51, 223)
-}
-
-// lg
-@media only screen and (min-width: 992px) {
-    .container {
-        width: 60% !important;
-    }
-}
-
-// xs
-@media only screen and (max-width: 575px) {
-    .rating-form {
-        align-items: start
-    }
-
-    .login-header {
-        text-align: center;
-        font-size: 2rem;
-    }
-}
-
-// sm
-@media only screen and (min-width: 576px) {
-    .rating-form {
-        align-items: end
-    }
+    background: $purple;
 }
 
 .btn-primary {
