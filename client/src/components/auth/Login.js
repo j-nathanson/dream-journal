@@ -8,13 +8,13 @@ import CustomInput from '../form/CustomInput'
 
 export default function Login() {
 
+    // react-hook-form config,
+    const { control, handleSubmit, formState: { } } = useForm();
+
+    //  error message to display to user, global context function to update logged in user, router-dom navigation method
     const [error, setError] = useState('')
     const { getLoggedIn } = useContext(AuthContext)
     const navigate = useNavigate()
-
-
-    const { control, handleSubmit, formState: { } } = useForm();
-
 
     const login = async (data) => {
         try {

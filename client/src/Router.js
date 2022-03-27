@@ -7,7 +7,7 @@ import Navigation from './components/layout/Navigation'
 import AuthContext from './context/AuthContext'
 
 export default function Router() {
-    const { loggedIn } = useContext(AuthContext)
+    // const { loggedIn } = useContext(AuthContext)
     return (
         <BrowserRouter>
             <Navigation />

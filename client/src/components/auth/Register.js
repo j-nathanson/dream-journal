@@ -1,25 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import AuthContext from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Container, Form, Row } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import CustomInput from '../form/CustomInput'
 
 export default function Register() {
 
-    const [email, setEmail] = useState('')
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordVerify, setPasswordVerify] = useState('')
+    // react-hook-form config, watch password for exact value
+    const { control, handleSubmit, formState: { }, watch } = useForm();
+    const password = useRef({});
+    password.current = watch("password", "");
 
+    //  error message to display to user, global context function to update logged in user, router-dom navigation method
+    const [error, setError] = useState('')
     const { getLoggedIn } = useContext(AuthContext)
     const navigate = useNavigate()
 
 
-    const register = async (e) => {
-        e.preventDefault()
+    const register = async (data) => {
         try {
             const registerData = {
-                email, name, password, passwordVerify
+                name: data.name,
+                email: data.email,
+                password: data.password,
             }
             await axios.post("http://localhost:3001/auth/", registerData)
 
@@ -27,7 +32,12 @@ export default function Register() {
             await getLoggedIn()
             navigate('/journal')
         } catch (err) {
-            console.log(err)
+            let { message } = err.response.data.err
+            // in db 'email' replaces 'username' so we need to change the error message
+            if (message === 'A user with the given username is already registered') {
+                message = 'This email is already registered.'
+            }
+            setError(message)
         }
     }
 
@@ -54,41 +64,51 @@ export default function Register() {
     return (
         <Container fluid className='d-flex align-items-center justify-content-center login-container'>
             <Row>
-                <Form onSubmit={register}>
+                <Form onSubmit={handleSubmit(register)}>
                     <h1 className='mb-5'>Register a new account</h1>
-                    <Form.Group className='mb-3'>
-                        <Form.Control
-                            type="text"
-                            placeholder='Name'
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                        />
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Control
-                            type="email"
-                            placeholder='Email'
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                        />
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Control
-                            type="password"
-                            placeholder='Password'
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                        />
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Control
-                            type="password"
-                            placeholder='Verify your Password'
-                            onChange={(e) => setPasswordVerify(e.target.value)}
-                            value={passwordVerify}
-                        />
-                    </Form.Group>
-
+                    {error && <p>{error}</p>}
+                    <CustomInput
+                        name="name"
+                        placeholder="Name"
+                        control={control}
+                        rules={{
+                            required: "Name is Required",
+                            pattern: {
+                                value: /^[A-Za-z- ]+$/,
+                                message: 'No numbers in names please '
+                            }
+                        }}
+                    />
+                    <CustomInput
+                        name="email"
+                        placeholder="Email"
+                        control={control}
+                        rules={{
+                            required: "Email is Required",
+                            pattern: { value: /(.+)@(.+){2,}\.(.+){2,}/, message: 'Please enter valid email.' }
+                        }}
+                    />
+                    <CustomInput
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        control={control}
+                        rules={{
+                            required: "Password is Required",
+                            minLength: { value: 8, message: "Passwords must be more than 8 characters" }
+                        }}
+                    />
+                    <CustomInput
+                        name="verifyPassword"
+                        type="password"
+                        placeholder="Verify your Password"
+                        control={control}
+                        rules={{
+                            required: "Please verify your password",
+                            validate: value =>
+                                value === password.current || "The passwords do not match"
+                        }}
+                    />
                     <Button className='w-100 ' variant='success' type="submit">Log in</Button>
 
                     <hr />

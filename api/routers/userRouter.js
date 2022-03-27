@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
                     return res
                         .status(200)
                         .setHeader('Content-Type', 'application/json')
-                        .cookie("token", token, { httpOnly: true })
+                        .cookie("jwt", token, { httpOnly: true })
                         .json({ success: true, status: 'Registration Successful!' });
                 });
             })
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
         return res
             .status(500)
             .setHeader('Content-Type', 'application/json')
-            .json({ err: err })
+            .json({ message: err.message })
     }
 })
 
@@ -75,6 +75,7 @@ router.get('/loggedIn', (req, res) => {
     // will return true or false based if a cookies is present and verified
     //  will send 200 status code regardless
     try {
+        console.log(req.cookies)
         const token = req.cookies.jwt
 
         // no token
