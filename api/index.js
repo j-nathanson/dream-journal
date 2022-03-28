@@ -1,5 +1,4 @@
 const express = require("express")
-const session = require('express-session')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
@@ -14,12 +13,14 @@ dotenv.config();
 
 // server set up
 const app = express();
-// set up cookie to use for oauth
+
+// set up cookie to use for google login, 1 day expiration,
+// httpOnly prevents client-side scripts from accessing data
 app.use(cookieSession(
     {
         name: "session",
         keys: [process.env.COOKIE_SECRET],
-        maxAge: 24 * 60 * 60 * 100,
+        maxAge: 24 * 60 * 1000,
         httpOnly: true
     }
 ))

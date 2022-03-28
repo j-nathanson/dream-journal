@@ -16,6 +16,7 @@ export default function Login() {
     const { getLoggedIn } = useContext(AuthContext)
     const navigate = useNavigate()
 
+    // login with credentials from react-hook-form
     const login = async (data) => {
         try {
             const loginData = {
@@ -36,11 +37,13 @@ export default function Login() {
         }
     }
 
+    // google login
     const loginGoogle = () => {
         window.open('http://localhost:3001/auth/google', '_self')
     }
 
 
+    // get jwt token from apo then navigate to the 'journal' page
     const getToken = async () => {
         try {
             const res = await axios.get('http://localhost:3001/auth/login/success')
@@ -95,7 +98,6 @@ export default function Login() {
                     <div className='d-flex justify-content-center'>
                         <p>need an account? <Link className='auth-link' to='/register'>Sign Up</Link> </p>
                     </div>
-
                 </Form>
             </Row>
         </Container>

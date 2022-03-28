@@ -18,7 +18,7 @@ export default function Register() {
     const { getLoggedIn } = useContext(AuthContext)
     const navigate = useNavigate()
 
-
+    // register with credentials from react-hook-form
     const register = async (data) => {
         try {
             const registerData = {
@@ -33,7 +33,7 @@ export default function Register() {
             navigate('/journal')
         } catch (err) {
             let { message } = err.response.data.err
-            // in db 'email' replaces 'username' so we need to change the error message
+            // change the error message
             if (message === 'A user with the given username is already registered') {
                 message = 'This email is already registered.'
             }
@@ -41,10 +41,12 @@ export default function Register() {
         }
     }
 
+    // google login
     const loginGoogle = () => {
         window.open('http://localhost:3001/auth/google', '_self')
     }
 
+    // get jwt token from apo then navigate to the 'journal' page
     const getToken = async () => {
         try {
             const res = await axios.get('http://localhost:3001/auth/login/success')

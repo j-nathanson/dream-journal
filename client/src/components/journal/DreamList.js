@@ -46,9 +46,9 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
                 <Row className='mb-4 align-items-end'>
                     <Col xs={8} >
                         <ContentEditable
-                            html={toggle ? title : newTitle} // 
+                            html={toggle ? `"${title}"` : newTitle} // 
                             disabled={toggle} //boolean to edit
-                            onChange={(e) => setNewTitle(e.target.value)} // 
+                            onChange={(e) => setNewTitle(e.target.value)}
                             tagName='h3'
                             className='m-0 pt-2 px-1'
                             style={{
