@@ -111,7 +111,7 @@ export default function Register() {
                                 value === password.current || "The passwords do not match"
                         }}
                     />
-                    <Button className='w-100 ' variant='success' type="submit">Log in</Button>
+                    <Button className='w-100 ' variant='success' type="submit">Register</Button>
 
                     <hr />
                     <Button className=" w-100 mb-3 btn-google" onClick={loginGoogle}>
