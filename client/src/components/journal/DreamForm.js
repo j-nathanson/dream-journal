@@ -30,6 +30,12 @@ export default function DreamForm({ getJournal }) {
         try {
             await axios.post('http://localhost:3001/journal', dreamData)
             getJournal(); //make http req to rerender page
+            // refresh values
+            setTitle('')
+            setDate(moment().subtract(1, 'days').format('YYYY-MM-DD'))
+            setRating(3)
+            setTag('normal')
+            setDescription('')
         } catch (err) {
             console.log(err)
         }
@@ -98,6 +104,7 @@ export default function DreamForm({ getJournal }) {
                                 onChange={(e) => setDescription(e.target.value)} placeholder='describe your dream to the best of your ability'
                                 rows="2"
                                 className='w-100'
+                                value={description}
                                 required
                             />
                         </Form.Group>
