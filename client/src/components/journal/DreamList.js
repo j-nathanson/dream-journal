@@ -40,7 +40,7 @@ const Entry = ({ entry, updateEntry, deleteEntry }) => {
             <Form onSubmit={submitEdit}>
                 <Row className='mb-4'>
                     <Col xs={12}>
-                        <h2>{moment(date).format('ddd, MMMM Do, YYYY')}</h2>
+                        <h2>{moment(date).format('dddd, MMMM Do, YYYY')}</h2>
                     </Col>
                 </Row>
                 <Row className='mb-4 align-items-end'>
