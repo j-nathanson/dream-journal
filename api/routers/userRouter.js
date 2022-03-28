@@ -61,7 +61,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 
 //** LOGOUT
 router.get('/logout', auth.verifyUser, (req, res) => {
-    // attempt to delete, if you can't at least make it empty and expired so the browser can automatically clear it.
+
     return res
         .clearCookie('jwt')
         .clearCookie('session')
