@@ -101,7 +101,7 @@ router.get('/login/failed', (req, res) => {
         })
 })
 
-// GET Give google login/register users a jwt token
+//* GET Give google login/register users a jwt token
 router.get('/login/success', (req, res) => {
     if (req.user) {
         const token = auth.getToken({ _id: req.user._id });
